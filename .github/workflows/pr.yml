@@ -1,0 +1,13 @@
+name: Nick test
+
+on:
+  pull_request_target:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build and Run Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo 'Started!'
