@@ -6,8 +6,29 @@ on:
       - master
 
 jobs:
-  build:
-    name: Build and Run Unit Tests
+  checkout-base:
     runs-on: ubuntu-latest
     steps:
-    - run: echo 'Started!'
+    - name: Checkout package
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Check for changes
+      uses: andstor/file-existence-action@v1
+      with:
+        files: "package.json"
+    
+  checkout-ref:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout package
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        ref: ${{github.event.pull_request.head.ref}}
+        repository: ${{github.event.pull_request.head.repo.full_name}}
+    - name: Check for changes
+      uses: andstor/file-existence-action@v1
+      with:
+        files: "package.json"
+    
